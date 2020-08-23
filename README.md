@@ -12,8 +12,8 @@ This document contains the following details:
 - Description of the Topology
 - Access Policies
 - ELK Configuration
-  - Beats in Use
-  - Machines Being Monitored
+- Beats in Use
+- Machines Being Monitored
 - How to Use the Ansible Build
 
 
@@ -25,8 +25,8 @@ Load balancing ensures that the application will be accessable and responsive, i
 The jumpbox is used on the network to access nodes in many locations. This allows secure configuration protocols to be implemented, while also providing simple accessibility in development.
 
 Integrating an ELK server allows users to easily monitor the vulnerable VMs for changes to the docker containers and system logs.
-- _TODO: What does Filebeat watch for?_
-- _TODO: What does Metricbeat record?_
+- Filebeat watches and records the system logs for the Web 1 and 2 virtual machines. These logs are vital for seeing information about the virtual machines that host the public DVWA application.
+- Metricbeat watches, records, and transmits information in regards to the performance of the web applications being hosted on the Web 1 and 2 virtual machines. Metricbeat also collects and transmits information from the system and the processes that are running.
 
 The configuration details of each machine may be found below.
 
@@ -41,20 +41,29 @@ The configuration details of each machine may be found below.
 
 The machines on the internal network are not exposed to the public Internet. 
 
-Only the _____ machine can accept connections from the Internet. Access to this machine is only allowed from the following IP addresses:
-- _TODO: Add whitelisted IP addresses_
+Only the Jump Box machine can accept connections from the Internet. Access to this machine is only allowed from the following IP addresses:
+- Public IP of the user(s) allowed to SSH into the Jump Box VM.
 
-Machines within the network can only be accessed by _____.
-- _TODO: Which machine did you allow to access your ELK VM? What was its IP address?_
+Machines within the network can only be accessed through the Jump Box virtual machine.
+- Web VM 1
+	- Available from the Jump Box virtual machine.
+- Web VM 2
+	- Available from the Jump Box virtual machine.
+- ELK Server VM
+	- Available from Web 1 & 2 virtual machines.
+
+Publically available domains:
+- 40.88.37.103 (Damn Vulnerable Web Application)
+	*** Currently only available to my public IP in order to reduce traffic ***
 
 A summary of the access policies in place can be found in the table below.
 
-|    Name    | Publicly Accessible |      Allowed IP Addresses     |
-|:----------:|:-------------------:|:-----------------------------:|
-| Jump Box   |          No         | SSH configured for admin user |
-| Web VM 1   |         Yes         | from *, port 80, to DVWA      |
-| Web VM 2   |         Yes         | from *, port 80, to DVWA      |
-| ELK Server |          No         | 10.0.0.5, 10.0.0.6            |
+|    Name    | Publicly Accessible |              Allowed IP Addresses            |
+|:----------:|:-------------------:|:--------------------------------------------:|
+| Jump Box   |          No         | SSH configured for admin user                |
+| Web VM 1   |        Yes/No       | from *, port 80, to DVWA  (VM is private)    |
+| Web VM 2   |        Yes/No       | from *, port 80, to DVWA  (VM is private)    |
+| ELK Server |          No         | 10.0.0.5, 10.0.0.6                           |
 
 ### Elk Configuration
 
